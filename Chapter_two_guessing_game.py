@@ -35,7 +35,7 @@ for guessestaken in range(6):
 
 if guess == number:
     guessestaken = str(guessestaken + 1)
-    print("Weldone " + myname + "! You guessed my number in " + guessestaken + " guesses!")
+    print("Welldone " + myname + "! You guessed my number in " + guessestaken + " guesses!")
 
 if guess != number:
     number = str(number)
