@@ -2,6 +2,12 @@
 
 import random
 
+import time
+
+# Just adding a title
+
+print("TIC- TAC-TOE")
+
 # A function that creates a visible board in the output
 
 def drawboard(board):
@@ -16,12 +22,27 @@ def drawboard(board):
 def inputplayerletter():
     letter = " "
     while not (letter == "X" or letter == "O"):
-        print(" Do you want to be X or O?")
+        time.sleep(2)
+        print("Do you want to be X or O?")
         letter = input().upper()
         if letter == "X":
             return ["X", "O"]
         else:
             return ["0", "X"]
+
+# Shows the player the board with the numbers in the given positions
+
+print("""
+Quick tutorial
+The aim of the game is to connect three of your own letters before your AI opponent.
+Using number inputs 1-9 you can choose any position so long as it is currently empty.
+
+7|8|9
+-+-+-
+4|5|6
+-+-+-
+1|2|3
+""")
 
 # A function that randomly chooses the player that goes first and returns the respective player
 
@@ -61,7 +82,7 @@ def getboardcopy(board):
 def isspacefree(board, move):
     return board[move] == " "
 
-#
+# Takes the players input from 1-9 as an input
 
 def getplayermove(board):
     move = ""
@@ -109,13 +130,13 @@ def getcomputermove(board, computerletter):
     if isspacefree(board, 5):
         return 5
 
-    return chooserandommovefromlist(2, 4, 6, 8)
+    return chooserandommovefromlist(board, [2, 4, 6, 8])
 
 # Checks if there are any positions left to fill and returns True if so and False otherwise
 
 def isboardfull(board):
     for i in range(1, 10):
-        if isspacefree(board, 1):
+        if isspacefree(board, i):
             return False
     return True
 
@@ -128,6 +149,7 @@ def isboardfull(board):
 # Goes through all the same checks as the "players turn" section
 # # Bouncing the turns back and forth until there is either a tie or a winner
 # Finally once the gameisplaying = False asking if the player would like to play again
+
 while True:
     theboard = [" "] * 10
     playerletter, computerletter = inputplayerletter()
@@ -144,7 +166,7 @@ while True:
             if iswinner(theboard, playerletter):
                 drawboard(theboard)
                 print("Hooray! You have won the game!")
-                gameisplayer = False
+                gameisplaying = False
             else:
                 if isboardfull(theboard):
                     drawboard(theboard)
@@ -165,8 +187,16 @@ while True:
                     drawboard(theboard)
                     print("The game is a tie!")
                     break
+                else:
+                    turn = "player"
 
     print("Do you want to play again? (yes or no)")
     if not input().lower().startswith("y"):
         break
 
+# Debugging steps
+# line 139 Replaced a 1 or I in the isboardfull() function that meant as soon as 1 was played the game would instantly
+# tie
+# Added a "Title" alongside a master tictactoe ASCII that contained the numbers for each position (Tutorial
+# Line 133 added the correct items into the function that was giving an error when the AI would only have the option to
+# play [2, 4, 6, 8]
